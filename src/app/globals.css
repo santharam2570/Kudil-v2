@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0a0604;
+  --color-coal: #140d09;
+  --color-soot: #1d140e;
+  --color-ember: #f26b1d;
+  --color-flame: #ff9a3c;
+  --color-chili: #b3260f;
+  --color-maroon: #6e1410;
+  --color-turmeric: #f2b544;
+  --color-cream: #f6ead7;
+  --color-sand: #cdb89a;
+  --color-leaf: #1f5a32;
+  --color-copper: #b8733e;
+
+  --font-display: var(--font-fraunces), "Georgia", serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-tamil: var(--font-baloo), var(--font-manrope), sans-serif;
+
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-kenburns: kenburns 14s var(--ease-cinematic) both;
+  --animate-float-slow: float-slow 7s ease-in-out infinite;
+  --animate-scroll-cue: scroll-cue 2.2s ease-in-out infinite;
+
+  @keyframes kenburns {
+    from { transform: scale(1.14); }
+    to { transform: scale(1.02); }
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes scroll-cue {
+    0% { transform: translateY(0); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: translateY(18px); opacity: 0; }
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+
+  body {
+    font-family: var(--font-sans);
+    overflow-x: clip;
+  }
+  ::selection { background: var(--color-ember); color: var(--color-ink); }
+  :focus-visible { outline: 2px solid var(--color-turmeric); outline-offset: 3px; border-radius: 4px; }
+  img { user-select: none; -webkit-user-drag: none; }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-[0.7rem] font-semibold tracking-[0.32em] uppercase text-turmeric;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply block h-px w-8 bg-gradient-to-r from-transparent to-turmeric;
+  }
+  .display {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+    letter-spacing: -0.02em;
+  }
+  .tamil { font-family: var(--font-tamil); letter-spacing: 0; }
+
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-wide transition-all duration-500;
+    transition-timing-function: var(--ease-cinematic);
+  }
+  .btn-primary {
+    @apply text-ink;
+    background: linear-gradient(135deg, var(--color-flame), var(--color-ember) 55%, var(--color-chili));
+    box-shadow: 0 10px 40px -10px rgb(242 107 29 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 50px -12px rgb(242 107 29 / 0.9), inset 0 1px 0 rgb(255 255 255 / 0.35); }
+  .btn-ghost {
+    @apply border border-cream/25 text-cream backdrop-blur-md bg-white/5;
+  }
+  .btn-ghost:hover { @apply border-turmeric/70 bg-white/10; transform: translateY(-2px); }
+
+  .glass {
+    @apply border border-white/10 bg-white/[0.04] backdrop-blur-xl;
+  }
+  .text-gradient-fire {
+    background: linear-gradient(100deg, var(--color-turmeric), var(--color-flame) 40%, var(--color-ember) 70%, var(--color-chili));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.9  0 0 0 0 0.8  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.vignette {
+  background: radial-gradient(120% 90% at 50% 40%, transparent 40%, rgb(10 6 4 / 0.85) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
